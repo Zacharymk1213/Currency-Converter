@@ -1,0 +1,120 @@
+<!--
+    Moon by GetTemplates.co
+    URL: https://gettemplates.co
+-->
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Currency Converter</title>
+    <meta name="description" content="Core HTML Project">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- External CSS -->
+    <link rel="stylesheet" href="vendor/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" href="vendor/owlcarousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="vendor/lightcase/lightcase.css">
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Lato:300,400|Work+Sans:300,400,700" rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.min.css">
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+    <link href="https://file.myfontastic.com/7vRKgqrN3iFEnLHuqYhYuL/icons.css" rel="stylesheet">
+
+    <!-- Modernizr JS for IE8 support of HTML5 elements and media queries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.js"></script>
+
+</head>
+<body data-spy="scroll" data-target="#navbar-nav-header" class="static-layout">
+
+    <div class="boxed-page">
+        <% if (typeof locals.error !== 'undefined') { %>
+            <div class="alert alert-danger" role="alert">
+                <%= locals.error %>
+            </div>
+        <% } %>
+
+        <div class="jumbotron d-flex align-items-center">
+            <div class="container text-center">
+                <h1 class="display-2 mb-4">Currency converter</h1>
+                <p>
+                    This app allows you to convert between different currencies.
+                </p>
+                <img src="chatgpt_currency.webp" alt="Currency Image" class="currency-image">
+            </div>
+        </div>
+
+        <form id="currency-form" class="currency-form" action="/convert" method="POST">
+            <div class="form-group">
+                <label for="amount">Amount:</label>
+                <input type="number" id="amount" name="amount" class="form-control" min="0" step="any" value="<%= typeof input_amount !== 'undefined' ? input_amount : '' %>"> 
+            </div>
+
+            <div class="form-group">
+                <label for="from-currency">From:</label>
+                <select id="from-currency" name="fromCurrency" class="form-control">
+                    <% for(let code in currencies) { %>
+                        <option value="<%= code %>" <%= typeof fromCurrency !== 'undefined' && fromCurrency === code ? 'selected' : '' %>><%= code %> - <%= currencies[code] %></option>
+                    <% } %>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="to-currency">To:</label>
+                <select id="to-currency" name="toCurrency" class="form-control">
+                    <% for(let code in currencies) { %>
+                        <option value="<%= code %>" <%= typeof toCurrency !== 'undefined' && toCurrency === code ? 'selected' : '' %>><%= code %> - <%= currencies[code] %></option>
+                    <% } %>
+                </select>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Convert</button>
+        </form>
+
+        <!-- Counter Section -->
+        <section id="gtco-counter" class="overlay bg-fixed">
+            <div class="container">
+                <div class="section-content">
+                    <div class="row">
+                        <!-- Counter Item -->
+                        <div class="col-md-6 col-sm-6 counter-item">
+                            <i class="lnr lnr-briefcase"></i>
+                            <span class="number" data-from="0" data-to="<%= locals.input_amount || 0 %>" data-refresh-interval="100"><%= locals.input_amount || 0 %></span>
+                            <h4>Inputted value in <%= currencies[locals.fromCurrency] || 'not yet selected' %></h4>
+                        </div>
+                        <!-- End of Counter Item -->
+                        <!-- Counter Item -->
+                        <div class="col-md-6 col-sm-6 counter-item">
+                            <i class="lnr lnr-briefcase"></i>
+                            <span class="number" data-from="0" data-to="<%= locals.output_amount || 0 %>" data-refresh-interval="100"><%= locals.output_amount || 0 %></span>
+                            <h4>Outputted value in <%= currencies[locals.toCurrency] || 'not yet selected' %></h4>
+                        </div>
+                        <!-- End of Counter Item -->
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End of Counter Section -->        
+
+    </div>
+    
+    <!-- External JS -->
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.js"></script>
+    <script src="vendor/bootstrap/popper.min.js"></script>
+    <script src="vendor/bootstrap/bootstrap.min.js"></script>
+    <script src="vendor/select2/select2.min.js"></script>
+    <script src="vendor/owlcarousel/owl.carousel.min.js"></script>
+    <script src="vendor/isotope/isotope.min.js"></script>
+    <script src="vendor/lightcase/lightcase.js"></script>
+    <script src="vendor/waypoints/waypoint.min.js"></script>
+    <script src="vendor/countTo/jquery.countTo.js"></script>
+
+    <!-- Main JS -->
+    <script src="js/app.min.js"></script>
+    <script src="//localhost:35729/livereload.js"></script>
+</body>
+</html>
